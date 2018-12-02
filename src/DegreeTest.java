@@ -28,10 +28,70 @@ public class DegreeTest {
 	@Test
 	public void constructorTakesValidLists() {
 		Degree degree = new Degree(
-				Arrays.asList(new Grade(1), new Grade(2), new Grade(16), new Grade(5)),
+				Arrays.asList(new Grade(1), new Grade(2), new Grade(15), new Grade(5)),
 				Arrays.asList(new Grade(15), new Grade(14), new Grade(13), new Grade(10))
 		);
 		
 		assertEquals(degree.getClass(), Degree.class);
+	}
+	
+	@Test
+	public void classifiesProfilesWithSameClassification() {
+		Degree degree = new Degree(
+				Arrays.asList(new Grade(1), new Grade(2), new Grade(1), new Grade(1)),
+				Arrays.asList(new Grade(2), new Grade(1), new Grade(1), new Grade(1))
+		);
+		
+		assertEquals(degree.classify(), Classification.First);
+	}
+	
+	@Test
+	public void classifiesProfilesWithThirdYearClearAndSlightlyBetterClassification() {
+		Degree degree = new Degree(
+				Arrays.asList(new Grade(5), new Grade(5), new Grade(5), new Grade(5)),
+				Arrays.asList(new Grade(1), new Grade(1), new Grade(1), new Grade(1))
+		);
+		
+		assertEquals(degree.classify(), Classification.First);
+	}
+	
+	@Test
+	public void classifiesProfilesWithThirdYearBorderlineAndSlightlyBetterClassification() {
+		Degree degree = new Degree(
+				Arrays.asList(new Grade(13), new Grade(5), new Grade(1), new Grade(13)),
+				Arrays.asList(new Grade(1), new Grade(1), new Grade(1), new Grade(13))
+		);
+		
+		assertEquals(degree.classify(), Classification.Discretion);
+	}
+	
+	@Test
+	public void classifiesProfilesWithSecondYearClearAndSlightlyBetterClassification() {
+		Degree degree = new Degree(
+				Arrays.asList(new Grade(1), new Grade(1), new Grade(1), new Grade(5)),
+				Arrays.asList(new Grade(5), new Grade(5), new Grade(5), new Grade(5))
+		);
+		
+		assertEquals(degree.classify(), Classification.First);
+	}
+	
+	@Test
+	public void classifiesProfilesWithSecondYearBorderlineAndSlightlyBetterClassification() {
+		Degree degree = new Degree(
+				Arrays.asList(new Grade(1), new Grade(1), new Grade(13), new Grade(13)),
+				Arrays.asList(new Grade(5), new Grade(5), new Grade(5), new Grade(5))
+		);
+		
+		assertEquals(degree.classify(), Classification.Discretion);
+	}
+	
+	@Test
+	public void classifiesProfilesWithVeryDifferentClassifications() {
+		Degree degree = new Degree(
+				Arrays.asList(new Grade(1), new Grade(1), new Grade(1), new Grade(11)),
+				Arrays.asList(new Grade(11), new Grade(11), new Grade(11), new Grade(11))
+		);
+		
+		assertEquals(degree.classify(), Classification.Discretion);
 	}
 }
