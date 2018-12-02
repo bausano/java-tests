@@ -94,4 +94,14 @@ public class ProfileTest {
 		assertEquals(profile.classify(), Classification.Third);
 		assertTrue(profile.isClear());
 	}
+	
+	@Test
+	public void isClearCanBeCalledBeforeClassify() {
+		Profile profile = new Profile(
+				Arrays.asList(new Grade(1), new Grade(1), new Grade(1), new Grade(1))
+		);
+		
+		assertTrue(profile.isClear());
+		assertEquals(profile.classify(), Classification.First);
+	}
 }
