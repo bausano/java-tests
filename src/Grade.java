@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Grade {
 	
 	/**
@@ -48,18 +50,18 @@ public class Grade {
 		if (g > 100 || g < -1) {
 			throw new IllegalArgumentException();
 		}
-		
-		int p;
-		
-		for (p = 0; p < bounds.length; p++) {
+
+		int band;
+
+		for (band = 0; band < bounds.length; band++) {
 			// If the percentage is greater than next bound, break the cycle.
-			if (g >= bounds[p]) {
+			if (g >= bounds[band]) {
 				break;
 			}
 		}
 		
 		// We start at index 0, but the grades are from 1 to 20,
 		// hence we have to increment it.
-		return new Grade(p + 1);
+		return new Grade(band + 1);
 	}
 }
