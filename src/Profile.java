@@ -70,12 +70,12 @@ public class Profile {
 	 * @return Array of 4 doubles where 1st element is First, ...
 	 */
 	private double[] calcPercentages() {
-		double[] counts = new double[4];
+		double[] occurences = new double[4];
 		
 		int size = grades.size();
 		
-		grades.stream().forEach(grade -> counts[5 - grade.classify().ordinal()]++);
+		grades.stream().forEach(grade -> occurences[5 - grade.classify().ordinal()]++);
 
-		return Arrays.stream(counts).map(i -> i / size * 100).toArray();
+		return Arrays.stream(occurences).map(i -> i / size * 100).toArray();
 	}
 }

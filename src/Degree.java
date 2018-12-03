@@ -4,27 +4,21 @@ import java.util.stream.Stream;
 
 public class Degree {
 	
-	private final List<Grade> levelFiveGrades;
+	private final Profile levelFive;
 	
-	private final List<Grade> levelSixGrades;
+	private final Profile levelSix;
 	
 	public Degree(List<Grade> year2, List<Grade> year3) {
-		if (!isValidGradeList(year2) || !isValidGradeList(year3)) {
-			throw new IllegalArgumentException();
-		}
-
-		this.levelFiveGrades = year2;
+		this.levelFive = new Profile(year2);
 		
-		this.levelSixGrades = Stream
+		this.levelSix = new Profile(
+			Stream
 				.concat(year2.stream(), year3.stream())
-                .collect(Collectors.toList());
+				.collect(Collectors.toList())
+		);
 	}
 
 	public Classification classify() {
-		Profile levelFive = new Profile(this.levelFiveGrades);
-		
-		Profile levelSix = new Profile(this.levelSixGrades);
-		
 		int diff = levelFive.classify().ordinal() - levelSix.classify().ordinal();
 		
 		if (levelFive.classify() == levelSix.classify()) {
@@ -40,19 +34,5 @@ public class Degree {
 		}
 		
 		return Classification.Discretion;
-	}
-	
-	/**
-	 * Checks if a given list is valid.
-	 * 
-	 * @param list
-	 * @return
-	 */
-	private boolean isValidGradeList(List<Grade> list) {
-		if (list == null || list.size() != 4) {
-			return false;
-		}
-
-		return list.stream().allMatch(grade -> grade.classify() != Classification.Fail);
 	}
 }
